@@ -1,1 +1,228 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Página Responsive - Ejemplo</title>
+  <style>
+    /* Tipografía en rem */
+    :root{
+      font-size:16px; /* 1rem = 16px */
+      --gap: 1rem;
+      --card-radius: 14px;
+      --bg-gradient: linear-gradient(135deg, #dce7ff 0%, #e9dbff 100%);
+      --accent-gradient: linear-gradient(90deg,#6b8cff,#9b6bff);
+      --border-color: #334155;
+    }
 
+    /* Reset muy ligero */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      font-size:1rem; /* 1rem = 16px */
+      line-height:1.4;
+      background: radial-gradient(1000px 400px at 10% 10%, rgba(99,102,241,0.08), transparent), #fbfdff;
+      color:#0f172a;
+      padding:2rem;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      gap:var(--gap);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:var(--gap);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:0.75rem;
+    }
+
+    .logo{
+      width:3rem;height:3rem;border-radius:10px;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1.1rem;box-shadow:0 8px 20px rgba(99,102,241,0.12)
+    }
+
+    h1{font-size:1.125rem;margin:0}
+    p.lead{margin:0;color:#475569;font-size:0.95rem}
+
+    /* Grid principal: cards de diseño responsive */
+    .layout-grid{
+      display:grid;
+      gap:var(--gap);
+      grid-template-columns: 1fr;
+      align-items:start;
+    }
+
+    .card{
+      background:var(--bg-gradient);
+      padding:1rem;
+      border-radius:var(--card-radius);
+      box-shadow:0 6px 18px rgba(15,23,42,0.06);
+      border:1px solid rgba(15,23,42,0.04);
+    }
+
+    /* Tarjetas internas con diseño del dispositivo */
+    .device-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;justify-content:center}
+    .device{
+      flex:1 1 220px;
+      max-width:360px;
+      background:#fff;
+      border-radius:12px;
+      padding:0.9rem;
+      display:flex;flex-direction:column;gap:0.6rem;align-items:stretch
+    }
+
+    .screen{
+      border-radius:10px;
+      padding:0.6rem;
+      background:linear-gradient(180deg, rgba(239,246,255,1), rgba(245,240,255,1));
+      min-height:160px;
+      display:flex;align-items:center;justify-content:center;
+    }
+
+    .meta{font-size:0.85rem;color:#374151}
+
+    /* Botón accesible y con borde visible */
+    .cta{
+      display:inline-block;
+      padding:0.65rem 1rem;
+      font-size:1rem;
+      border-radius:8px;
+      border:3px solid var(--border-color);
+      background:transparent;
+      cursor:pointer;
+      text-decoration:none;
+      color:var(--border-color);
+      font-weight:600;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+
+    .cta:hover{transform:translateY(-2px)}
+
+    /* focus visible para accesibilidad */
+    .cta:focus{outline:3px solid rgba(99,102,241,0.18);outline-offset:4px}
+    .cta:active{transform:translateY(0)}
+
+    /* Imagen responsive dentro de la pantalla: usa srcset y sizes en el HTML */
+    .illustration{max-width:100%;height:auto;border-radius:8px;display:block}
+
+    /* Pie con ejemplo de grid/flex */
+    footer{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+
+    /* Media query mínimo: breakpoint en 768px */
+    @media (min-width: 48rem){ /* 48rem = 768px */
+      .layout-grid{grid-template-columns: 1fr 340px}
+      .device-row{flex-direction:column}
+      .screen{min-height:220px}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">R</div>
+        <div>
+          <h1>Ejemplo: layout responsive</h1>
+          <p class="lead">Media queries, rem, srcset, grid/flex y botón accesible</p>
+        </div>
+      </div>
+      <nav aria-label="Navegación principal">
+        <a class="cta" href="#main" role="button">Ver ejemplo</a>
+      </nav>
+    </header>
+
+    <main id="main" class="layout-grid">
+      <!-- Área principal: tarjetas que muestran dispositivos -->
+      <section class="card">
+        <h2 style="margin-top:0">Diseño adaptable</h2>
+        <p class="meta">Aquí hay un ejemplo simplificado de cómo un mismo layout se adapta a tres tamaños de pantalla.</p>
+
+        <div class="device-row" aria-hidden="false">
+          <!-- Desktop -->
+          <article class="device" aria-label="Vista escritorio">
+            <strong>Escritorio</strong>
+            <div class="screen">
+              <!-- Usamos la imagen subida; el path local se incluye en src/srcset -->
+              <img
+                class="illustration"
+                src="/mnt/data/A_flat-style_digital_illustration_displays_three_e.png"
+                srcset="/mnt/data/A_flat-style_digital_illustration_displays_three_e.png 1x, /mnt/data/A_flat-style_digital_illustration_displays_three_e.png 2x"
+                sizes="(min-width: 48rem) 320px, 100vw"
+                alt="Ilustración plana de un sitio responsive mostrado en escritorio, tablet y móvil">
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem">
+              <span class="meta">Ancho completo</span>
+              <button class="cta" aria-label="Abrir demo" title="Abrir demo">Abrir</button>
+            </div>
+          </article>
+
+          <!-- Tablet -->
+          <article class="device" aria-label="Vista tablet">
+            <strong>Tablet</strong>
+            <div class="screen">
+              <div style="width:90%;text-align:center">
+                <p class="meta" style="margin:0">Columnas: 2 (en breakpoint)</p>
+                <small class="meta">Grid o Flex según tamaño</small>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem">
+              <span class="meta">Max-width 720px</span>
+              <a class="cta" href="#" role="button" aria-label="Más información">Info</a>
+            </div>
+          </article>
+
+          <!-- Mobile -->
+          <article class="device" aria-label="Vista móvil">
+            <strong>Móvil</strong>
+            <div class="screen">
+              <div style="width:90%;text-align:center">
+                <p class="meta" style="margin:0">Columnas: 1</p>
+                <small class="meta">Diseño en una sola columna</small>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem">
+              <span class="meta">Touch-friendly</span>
+              <button class="cta" aria-label="Compartir">Share</button>
+            </div>
+          </article>
+        </div>
+
+      </section>
+
+      <!-- Sidebar: explica técnicas usadas -->
+      <aside class="card" aria-label="Notas técnicas">
+        <h3>Detalles técnicos</h3>
+        <ul>
+          <li>Media query mínimo: <code>@media (min-width:48rem)</code> (768px).</li>
+          <li>Tipografía y medidas en <strong>rem</strong> para escalabilidad.</li>
+          <li>Imagen con <code>srcset</code> y <code>sizes</code> para ser responsiva.</li>
+          <li>Layout principal: <strong>CSS Grid</strong> (pasa a 2 columnas en escritorio).</li>
+          <li>Botones con borde visible y <code>:focus</code> claro para accesibilidad.</li>
+        </ul>
+      </aside>
+
+    </main>
+
+    <footer>
+      <small class="meta">Ejemplo minimal — usa la imagen incluida en <code>/mnt/data/</code></small>
+      <div>
+        <a class="cta" href="#" aria-label="Subir a GitHub">Subir a GitHub</a>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
